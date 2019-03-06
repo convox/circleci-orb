@@ -1,0 +1,319 @@
+version: 2.1
+
+description: |
+  Convox integration. This orb allows you to build, promote, deploy, and run commands against the Convox platform
+  
+executors:
+  default:
+    description: circleci buildpack image
+    docker:
+      - image: circleci/buildpack-deps
+    working_directory: ~/convox
+      
+commands:
+  install:
+    description: |
+      Installs the Convox CLI
+    steps:
+      - run: 
+          name: Download and install Convox
+          command: |
+            curl -L https://convox.com/cli/linux/convox -o /tmp/convox \
+            && sudo mv /tmp/convox /usr/local/bin/convox \
+            && sudo chmod 755 /usr/local/bin/convox
+  build:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    steps:
+      - run: mkdir -p workspace
+      - run:
+            name: Build application with Convox
+            command: |
+              env CONVOX_PASSWORD=<< parameters.deploy-key >> \
+              CONVOX_HOST=<< parameters.convox-host >> \
+              convox build \
+              --rack << parameters.rack-name >> \
+              --app << parameters.app-name >> \
+              --id > workspace/release-id
+              
+      - persist_to_workspace:
+          root: workspace
+          paths: 
+            - release-id
+  deploy:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    steps:
+      - run:
+            name: Deploy application with Convox
+            command: |
+              env CONVOX_PASSWORD=<< parameters.deploy-key >> \
+              CONVOX_HOST=<< parameters.convox-host >> \
+              convox deploy \
+              --rack << parameters.rack-name >> \
+              --app << parameters.app-name >> \
+              --id > workspace/release-id
+              
+      - persist_to_workspace:
+          root: workspace
+          paths: 
+            - release-id
+  promote:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    steps:
+      - run:
+            name: Promote application with Convox
+            command: |
+              env CONVOX_PASSWORD=<< parameters.deploy-key >> \
+              CONVOX_HOST=<< parameters.convox-host >> \
+              convox releases promote \
+              --rack << parameters.rack-name >> \
+              --app << parameters.app-name >> \
+              $(cat ~/convox/workspace/release-id)
+  convoxrun:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+      service-name:
+        description: |
+          Your Convox service name
+        type: string
+      command:
+        description: |
+          The command you want to run
+        type: string
+    steps:
+      - run:
+            name: Run a command against your Convox application
+            command: |
+              env CONVOX_PASSWORD=<< parameters.deploy-key >> \
+              CONVOX_HOST=<< parameters.convox-host >> \
+              convox run << parameters.service-name >> \
+              << parameters.command >> \
+              --rack << parameters.rack-name >> \
+              --app << parameters.app-name >> \
+              --release $(cat ~/convox/workspace/release-id)
+
+jobs:
+  build:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    executor: default
+    steps:
+      - install
+      - checkout
+      - build:
+          deploy-key: << parameters.deploy-key >>
+          app-name: << parameters.app-name >>
+          rack-name: << parameters.rack-name >>
+          convox-host: << parameters.convox-host >>
+  deploy:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    executor: default
+    steps:
+      - install
+      - checkout
+      - deploy:
+          deploy-key: << parameters.deploy-key >>
+          app-name: << parameters.app-name >>
+          rack-name: << parameters.rack-name >>
+          convox-host: << parameters.convox-host >>
+  promote:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/convox/workspace
+      - install
+      - promote:
+          deploy-key: << parameters.deploy-key >>
+          app-name: << parameters.app-name >>
+          rack-name: << parameters.rack-name >>
+          convox-host: << parameters.convox-host >>
+  run:
+    parameters:
+      deploy-key:
+        description: |
+          Your Convox deploy key.
+          Instructions for generating the key
+          can be found here https://docs.convox.com/console/deploy-keys
+        type: string
+        default: "$CONVOX_DEPLOY_KEY"
+      app-name:
+        description: |
+          Your Convox app name
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME"
+      rack-name:
+        description: |
+          Your Convox Rack name
+        type: string
+      convox-host:
+        description: |
+          Your Convox console host url
+        type: string
+        default: "console.convox.com"
+      service-name:
+        description: |
+          Your Convox service name
+        type: string
+      command:
+        description: |
+          The command you want to run
+        type: string
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/convox/workspace
+      - install
+      - convoxrun:
+          deploy-key: << parameters.deploy-key >>
+          app-name: << parameters.app-name >>
+          rack-name: << parameters.rack-name >>
+          convox-host: << parameters.convox-host >>
+          service-name: << parameters.service-name >>
+          command: << parameters.command >>
+      
+
