@@ -8,33 +8,33 @@ examples:
     description: Deploy your application to Convox using the jobs from this orb
     usage:
       version: 2.1
-    orbs:
-      circleci/convox:1.3.0
-    workflows:
-      deploy:
-        jobs:
-          - convox/deploy:
-              rack: production
-              app: example
+      orbs:
+        convox: circleci/convox:1.3.0
+      workflows:
+        deploy:
+          jobs:
+            - convox/deploy:
+                rack: production
+                app: example
 
   convox_command:
     description: Customize your workflow using the commands from this orb
     usage:
       version: 2.1
-    orbs:
-      circleci/convox:1.3.0
-    workflows:
-      deploy:
-        jobs:
-          - deploy
-    jobs:
-      deploy:
-        executor: convox/cli
-        steps:
-          - checkout
-          - convox/deploy:
-              rack: production
-              app: example
+      orbs:
+        convox: circleci/convox:1.3.0
+      workflows:
+        deploy:
+          jobs:
+            - deploy
+      jobs:
+        deploy:
+          executor: convox/cli
+          steps:
+            - checkout
+            - convox/deploy:
+                rack: production
+                app: example
 
 executors:
   cli:
