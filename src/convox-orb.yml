@@ -84,6 +84,7 @@ commands:
         type: string
         default: "console.convox.com"
     steps:
+      - run: mkdir -p workspace
       - run:
             name: Deploy application with Convox
             command: |
