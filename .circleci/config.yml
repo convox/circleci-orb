@@ -7,7 +7,7 @@ workflows:
   btd:
     jobs:
       - orb-tools/publish:
-          orb-path: src/convox-orb.yml
-          orb-ref: convox/orb@1.2.0
+          orb-path: orb.yml
+          orb-ref: convox/orb@1.3.0
           publish-token-variable: "$CIRCLECI_DEV_API_TOKEN"
           validate: true
