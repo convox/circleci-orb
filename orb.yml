@@ -4,7 +4,7 @@ description: Deploy applications to Convox https://convox.com
 
 examples:
 
-  convox_job:
+  deploy_job:
     description: Deploy your application to Convox using the jobs from this orb
     usage:
       version: 2.1
@@ -17,7 +17,7 @@ examples:
                 rack: production
                 app: example
 
-  convox_command:
+  deploy_command:
     description: Customize your workflow using the commands from this orb
     usage:
       version: 2.1
