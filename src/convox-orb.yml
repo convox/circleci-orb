@@ -1,7 +1,7 @@
 version: 2.1
 
 description: |
-  Convox integration. This orb allows you to build, promote, deploy, and run commands against the Convox platform
+  Convox integration. This orb allows you to build, promote, deploy, and run commands against the Convox platform.
   
 executors:
   default:
