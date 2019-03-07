@@ -17,6 +17,7 @@ workflows:
             - validate
           filters:
             tags:
+              only: /\d+\.\d+\.\d+/
 
 jobs:
   validate:
