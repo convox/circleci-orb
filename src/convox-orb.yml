@@ -30,12 +30,12 @@ commands:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -52,8 +52,8 @@ commands:
               env CONVOX_PASSWORD=<< parameters.deploy-key >> \
               CONVOX_HOST=<< parameters.convox-host >> \
               convox build \
-              --rack << parameters.rack-name >> \
-              --app << parameters.app-name >> \
+              --rack << parameters.rack >> \
+              --app << parameters.app >> \
               --id > workspace/release-id
               
       - persist_to_workspace:
@@ -69,12 +69,12 @@ commands:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -90,8 +90,8 @@ commands:
               env CONVOX_PASSWORD=<< parameters.deploy-key >> \
               CONVOX_HOST=<< parameters.convox-host >> \
               convox deploy \
-              --rack << parameters.rack-name >> \
-              --app << parameters.app-name >> \
+              --rack << parameters.rack >> \
+              --app << parameters.app >> \
               --id > workspace/release-id
               
       - persist_to_workspace:
@@ -107,12 +107,12 @@ commands:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -128,8 +128,8 @@ commands:
               env CONVOX_PASSWORD=<< parameters.deploy-key >> \
               CONVOX_HOST=<< parameters.convox-host >> \
               convox releases promote \
-              --rack << parameters.rack-name >> \
-              --app << parameters.app-name >> \
+              --rack << parameters.rack >> \
+              --app << parameters.app >> \
               $(cat ~/convox/workspace/release-id)
   convoxrun:
     parameters:
@@ -140,12 +140,12 @@ commands:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -154,7 +154,7 @@ commands:
           Your Convox console host url
         type: string
         default: "console.convox.com"
-      service-name:
+      service:
         description: |
           Your Convox service name
         type: string
@@ -168,10 +168,10 @@ commands:
             command: |
               env CONVOX_PASSWORD=<< parameters.deploy-key >> \
               CONVOX_HOST=<< parameters.convox-host >> \
-              convox run << parameters.service-name >> \
+              convox run << parameters.service >> \
               << parameters.command >> \
-              --rack << parameters.rack-name >> \
-              --app << parameters.app-name >> \
+              --rack << parameters.rack >> \
+              --app << parameters.app >> \
               --release $(cat ~/convox/workspace/release-id)
 
 jobs:
@@ -184,12 +184,12 @@ jobs:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -204,8 +204,8 @@ jobs:
       - checkout
       - build:
           deploy-key: << parameters.deploy-key >>
-          app-name: << parameters.app-name >>
-          rack-name: << parameters.rack-name >>
+          app: << parameters.app >>
+          rack: << parameters.rack >>
           convox-host: << parameters.convox-host >>
   deploy:
     parameters:
@@ -216,12 +216,12 @@ jobs:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -236,8 +236,8 @@ jobs:
       - checkout
       - deploy:
           deploy-key: << parameters.deploy-key >>
-          app-name: << parameters.app-name >>
-          rack-name: << parameters.rack-name >>
+          app: << parameters.app >>
+          rack: << parameters.rack >>
           convox-host: << parameters.convox-host >>
   promote:
     parameters:
@@ -248,12 +248,12 @@ jobs:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -269,8 +269,8 @@ jobs:
       - install
       - promote:
           deploy-key: << parameters.deploy-key >>
-          app-name: << parameters.app-name >>
-          rack-name: << parameters.rack-name >>
+          app: << parameters.app >>
+          rack: << parameters.rack >>
           convox-host: << parameters.convox-host >>
   run:
     parameters:
@@ -281,12 +281,12 @@ jobs:
           can be found here https://docs.convox.com/console/deploy-keys
         type: string
         default: "$CONVOX_DEPLOY_KEY"
-      app-name:
+      app:
         description: |
           Your Convox app name
         type: string
         default: "$CIRCLE_PROJECT_REPONAME"
-      rack-name:
+      rack:
         description: |
           Your Convox Rack name
         type: string
@@ -295,7 +295,7 @@ jobs:
           Your Convox console host url
         type: string
         default: "console.convox.com"
-      service-name:
+      service:
         description: |
           Your Convox service name
         type: string
@@ -310,10 +310,10 @@ jobs:
       - install
       - convoxrun:
           deploy-key: << parameters.deploy-key >>
-          app-name: << parameters.app-name >>
-          rack-name: << parameters.rack-name >>
+          app: << parameters.app >>
+          rack: << parameters.rack >>
           convox-host: << parameters.convox-host >>
-          service-name: << parameters.service-name >>
+          service: << parameters.service >>
           command: << parameters.command >>
       
 
