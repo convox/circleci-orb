@@ -16,6 +16,8 @@ workflows:
           requires:
             - validate
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /\d+\.\d+\.\d+/
 
