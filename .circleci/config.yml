@@ -8,21 +8,13 @@ workflows:
   version: 2
   default:
     jobs:
-      - validate:
-          filters:
-            tags:
-              only: /.*/
       - publish:
-          requires:
-            - validate
       - release:
-          requires:
-            - validate
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /.*/
+              only: /^\d+\.\d+\.\d+$/
 
 jobs:
   validate:
@@ -38,6 +30,7 @@ jobs:
       - orb-tools/publish:
           orb-path: orb.yml
           orb-ref: convox/orb@dev:${CIRCLE_BRANCH}
+          validate: true
   release:
     executor: circleci-cli/default
     steps:
@@ -45,3 +38,4 @@ jobs:
       - orb-tools/publish:
           orb-path: orb.yml
           orb-ref: convox/orb@${CIRCLE_TAG}
+          validate: true
