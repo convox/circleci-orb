@@ -8,11 +8,13 @@ workflows:
   version: 2
   default:
     jobs:
-      - orb-tools/publish:
+      - publish:
+          name: orb-tools/publish
           orb-path: orb.yml
           orb-ref: convox/orb@dev:${CIRCLE_BRANCH}
           validate: true
-      - orb-tools/publish:
+      - release:
+          name: orb-tools/publish
           filters:
             branches:
               ignore: /.*/

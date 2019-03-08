@@ -4,25 +4,26 @@ description: Deploy applications to Convox https://convox.com
 
 examples:
 
-  deploy_job:
+  deploy:
     description: Deploy your application to Convox using the jobs from this orb
     usage:
       version: 2.1
       orbs:
-        convox: circleci/convox@volatile
+        convox: circleci/convox@1.4.0
       workflows:
         deploy:
           jobs:
+            - checkout
             - convox/deploy:
                 rack: production
                 app: example
 
-  deploy_command:
+  test_and_deploy:
     description: Customize your workflow using the commands from this orb
     usage:
       version: 2.1
       orbs:
-        convox: circleci/convox@volatile
+        convox: circleci/convox@1.4.0
       workflows:
         deploy:
           jobs:
@@ -32,6 +33,7 @@ examples:
           executor: convox/cli
           steps:
             - checkout
+            - run: make test
             - convox/deploy:
                 rack: production
                 app: example
