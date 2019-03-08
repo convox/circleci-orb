@@ -8,7 +8,7 @@ workflows:
   version: 2
   default:
     jobs:
-      - publish:
+      - publish
       - release:
           filters:
             branches:
