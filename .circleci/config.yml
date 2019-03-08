@@ -19,7 +19,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /\d+\.\d+\.\d+/
+              only: /.*/
 
 jobs:
   validate:
