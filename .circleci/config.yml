@@ -8,7 +8,10 @@ workflows:
   version: 2
   default:
     jobs:
-      - validate
+      - validate:
+          filters:
+            tags:
+              only: /.*/
       - publish:
           requires:
             - validate
