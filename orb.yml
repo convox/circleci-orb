@@ -9,7 +9,7 @@ examples:
     usage:
       version: 2.1
       orbs:
-        convox: circleci/convox@1.4.0
+        convox: convox/orb@1.4.1
       workflows:
         deploy:
           jobs:
@@ -23,7 +23,7 @@ examples:
     usage:
       version: 2.1
       orbs:
-        convox: circleci/convox@1.4.0
+        convox: convox/orb@1.4.1
       workflows:
         deploy:
           jobs:
