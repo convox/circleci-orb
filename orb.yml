@@ -1,6 +1,8 @@
 version: 2.1
 
-description: Deploy applications to Convox https://convox.com
+description: >
+  Deploy applications to Convox https://convox.com
+  Repo: https://github.com/convox/circleci-orb
 
 examples:
 
