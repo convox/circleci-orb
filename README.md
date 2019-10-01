@@ -50,7 +50,7 @@ jobs:
 
 ## See Also
 
-[https://circleci.com/orbs/registry/orb/convox/orb](https://circleci.com/orbs/registry/orb/convox/orb)yy
+[https://circleci.com/orbs/registry/orb/convox/orb](https://circleci.com/orbs/registry/orb/convox/orb)
 
 ## License
 
