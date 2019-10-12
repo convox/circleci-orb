@@ -16,6 +16,15 @@ If you don’t have an account already, [sign up for CircleCI](https://circleci.
 
  Now in CircleCI, [add an environment variable](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project) with the name CONVOX_DEPLOY_KEY and paste your deploy key as the value.
 
+ # Build a CircleCI config.yml Using the Convox Orb
+ # ( Note: You must specify version: 2.1 in your config.yml in order to use Orbs )
+The Convox Orb contains a single deploy command and matching job for deploying your app to Convox using CircleCI.
+
+The job is self contained. If you would prefer to use the command you must run the checkout command before using deploy.
+
+The deploy Job/Command accepts the following parameters:
+![parameters](assets/image.jpg?raw=true "Parameters")
+
 ## See Also
 
 https://docs.convox.com/external-services/circleci
