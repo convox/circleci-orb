@@ -25,9 +25,44 @@ The job is self contained. If you would prefer to use the command you must run t
 The deploy Job/Command accepts the following parameters:
 ![parameters](assets/image.jpg?raw=true "Parameters")
 
+# Examples
+config.yml
+----------------------------------------------------
+version: 2.1
+orbs:
+  convox: convox/orb@1.4.1
+workflows:
+  deploy:
+    jobs:
+      - convox/deploy:
+          rack: production
+          app: example
+
+This will build and deploy your app in a single step.
+
+If you would prefer to use the Convox Orb commands directly you need to run the checkout command before deploy:
+----------------------------------------------------
+version: 2.1
+orbs:
+  convox: convox/orb@1.4.1
+workflows:
+  deploy:
+    jobs:
+      - deploy
+jobs:
+  deploy:
+    executor: convox/cli
+    steps:
+      - checkout
+      - run: make test
+      - convox/deploy:
+          rack: production
+          app: example
+
+For Further information: https://docs.convox.com/external-services/circleci
+
 ## See Also
 
-https://docs.convox.com/external-services/circleci
 https://circleci.com/orbs/registry/orb/convox/orb
 
 ## License
