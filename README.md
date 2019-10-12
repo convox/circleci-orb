@@ -23,7 +23,7 @@ The Convox Orb contains a single deploy command and matching job for deploying y
 The job is self contained. If you would prefer to use the command you must run the checkout command before using deploy.
 
 The deploy Job/Command accepts the following parameters:
-![parameters](assets/image.jpg)
+<img src="/assets/image.JPG" alt="Parameters"/>
 
 ## Examples
 config.yml
