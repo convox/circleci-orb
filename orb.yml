@@ -1,17 +1,19 @@
 version: 2.1
 
 description: |
-  Deploy applications to Convox https://convox.com
-  Repo: https://github.com/convox/circleci-orb
+  Deploy applications to Convox
+
+display:
+  home_url: https://convox.com
+  source_url: https://github.com/convox/circleci-orb
 
 examples:
-
   deploy:
     description: Deploy your application to Convox using the jobs from this orb
     usage:
       version: 2.1
       orbs:
-        convox: convox/orb@1.4.1
+        convox: convox/orb@x.y
       workflows:
         deploy:
           jobs:
@@ -25,7 +27,7 @@ examples:
     usage:
       version: 2.1
       orbs:
-        convox: convox/orb@1.4.1
+        convox: convox/orb@x.y
       workflows:
         deploy:
           jobs:
