@@ -2,6 +2,7 @@ version: 2.1
 
 description: |
   Deploy applications to Convox
+  You must set your Convox deploy key as a project environment variable CONVOX_PASSWORD
 
 display:
   home_url: https://convox.com
@@ -52,10 +53,6 @@ executors:
 commands:
   deploy:
     parameters:
-      deploy-key:
-        description: Deploy Key - https://docs.convox.com/console/deploy-keys
-        type: string
-        default: "$CONVOX_DEPLOY_KEY"
       app:
         description: Application Name
         type: string
@@ -73,7 +70,6 @@ commands:
       - run:
           name: Deploy Application
           environment:
-            CONVOX_PASSWORD: << parameters.deploy-key >>
             CONVOX_HOST: << parameters.host >>
             CONVOX_RACK: << parameters.rack >>
           command: convox deploy --app << parameters.app >>
@@ -81,10 +77,6 @@ commands:
 jobs:
   deploy:
     parameters:
-      deploy-key:
-        description: Deploy Key - https://docs.convox.com/console/deploy-keys
-        type: string
-        default: "$CONVOX_DEPLOY_KEY"
       app:
         description: Application Name
         type: string
@@ -101,7 +93,6 @@ jobs:
     steps:
       - checkout
       - deploy:
-          deploy-key: << parameters.deploy-key >>
           app: << parameters.app >>
           rack: << parameters.rack >>
           host: << parameters.host >>
