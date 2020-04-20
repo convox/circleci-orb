@@ -33,6 +33,8 @@ jobs:
           app: example
 ```
 
+You will need to set the `CONVOX_PASSWORD` environment variable on your project to your Convox deploy key.
+
 ## See Also
 
 https://circleci.com/orbs/registry/orb/convox/orb
