@@ -4,7 +4,7 @@ CircleCI Orb for deploying to Convox.
 
 ## Description
 
-The Convox Orb allows CircleCI users to easily deploy their application to AWS ECS, and soon AWS EKS, via Convox, with a single command, as part of their CircleCI workflow.
+The Convox Orb allows CircleCI users to easily deploy their application to AWS ECS and AWS EKS, via Convox, with a single command, as part of their CircleCI workflow.
 
 __NOTE__: In order to make use of the Convox Orb you must first have a Convox account at the Basic level or above and a CircleCI account.
 

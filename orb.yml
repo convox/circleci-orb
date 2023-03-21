@@ -47,7 +47,7 @@ executors:
   cli:
     description: Convox CLI
     docker:
-      - image: convox/circleci
+      - image: convox/circleci:2.0
     working_directory: ~/convox
 
 commands:
